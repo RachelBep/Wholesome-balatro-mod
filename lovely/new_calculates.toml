@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 2
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''G.GAME.round_resets.ante = G.GAME.round_resets.ante + mod'''
+position = "after"
+payload = '''SMODS.calculate_context({who_change_ante = true})
+'''
+match_indent = true
+times = 1

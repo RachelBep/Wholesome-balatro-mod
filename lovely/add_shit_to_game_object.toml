@@ -1,0 +1,25 @@
+  [manifest]
+  version = "1.0.0"
+  dump_lua = true
+  priority = 2
+
+
+  [[patches]]
+  [patches.pattern]
+  target = "game.lua"
+  pattern = '''win_ante = 8,'''
+  position = "after"
+  payload = '''
+  who = {
+    bulk_reroll_text = "",
+    curse = 0,
+    min_curse = 0,
+    max_curse = 9,
+    round_reset_blind_banes = {},
+    round_reset_bane_value = {},
+    banes_down = false,
+    witch_rarity = 1,
+  },
+  '''
+  match_indent = true
+  times = 1

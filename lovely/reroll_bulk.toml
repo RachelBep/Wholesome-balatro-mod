@@ -1,0 +1,16 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 2
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''{n=G.UIT.T, config={ref_table = G.GAME.current_round, ref_value = 'reroll_cost', scale = 0.75, colour = G.C.WHITE, shadow = true}},'''
+position = "after"
+payload = '''
+{n=G.UIT.T, config={ref_table = G.GAME.who, ref_value = 'bulk_reroll_text', scale = 0.75, colour = G.C.WHITE, shadow = true}},
+'''
+match_indent = true
+times = 1

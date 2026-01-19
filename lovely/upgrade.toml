@@ -1,0 +1,78 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 2
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''UIBox_button({label = {localize('b_reroll_boss'), localize('$')..'10'}, button = "reroll_boss", func = 'reroll_boss_button'}) or nil'''
+position = "after"
+payload = ''',
+(G.GAME.used_vouchers["v_who_duplicated"]) and
+UIBox_button({label = {'Upgrade Big Blind'}, button = "upgrade_big", func = 'upgrade_big_blind_button'}) or nil
+'''
+match_indent = true
+times = 1
+
+
+
+
+
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''boss_rerolled = false,'''
+position = "after"
+payload = '''
+big_upgraded = false,
+boss_rerolled = false
+'''
+match_indent = true
+times = 1
+
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''G.GAME.round_resets.boss_rerolled = false'''
+position = "after"
+payload = '''
+G.GAME.round_resets.blind_choices.Big = 'bl_big'
+G.GAME.round_resets.big_upgraded = false
+'''
+match_indent = true
+times = 1
+
+
+
+
+## thank you cryptid for these fixes
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind:get_type() == 'Boss' then"
+position = "at"
+payload = "if G.GAME.round_resets.ante >= G.GAME.win_ante and G.GAME.blind_on_deck == 'Boss' then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_big then"
+position = "at"
+payload = "elseif G.GAME.blind_on_deck == 'Big' then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.GAME.blind:get_type() == 'Boss' then"
+position = "at"
+payload = "if G.GAME.blind_on_deck == 'Boss' then"
+match_indent = true

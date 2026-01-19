@@ -1,0 +1,15 @@
+{
+	"id": "wholesome",
+	"name": "Wholesome",
+	"display_name": "Wholesome",
+	"author": ["RachelBepis", "bails0-0", ".class.1cal"],
+	"description": "my first mod",
+	"prefix": "who",
+	"main_file": "main.lua",
+	"priority": 3,
+	"version": "0.0.1",
+	"dependencies": [
+    "Steamodded (>=1.*)",
+		"Lovely (>=0.6)",
+  ],
+}

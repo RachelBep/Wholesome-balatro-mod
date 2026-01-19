@@ -1,0 +1,21 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 2
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''card:set_edition(poll_edition('illusion', nil, true, true))'''
+position = "after"
+payload = '''end
+if (v.type == 'Base' or v.type == 'Enhanced') and G.GAME.used_vouchers["v_who_mentalism"] and pseudorandom(pseudoseed('mentalism')) > 0.5 then
+  local buff_poll = pseudorandom(pseudoseed('mentalism'))
+  if buff_poll > 1 - 0.15 then card.ability.perma_x_mult = (card.ability.perma_x_mult or 0) + 0.15
+  elseif buff_poll > 0.5 then card.ability.perma_mult = (card.ability.perma_mult or 0) + 4
+  else card.ability.perma_bonus = (card.ability.perma_bonus or 0) + 30
+  end
+  '''
+match_indent = true
+times = 1

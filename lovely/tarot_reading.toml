@@ -1,0 +1,78 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 2
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = 'for _, v in ipairs(info_queue) do'
+position = "before"
+payload = '''
+if G.GAME.used_vouchers["v_who_tarot_reading"] then
+  if _c.key == 'c_fool' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_fool']
+  elseif _c.key == 'c_magician' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_magician']
+  elseif _c.key == 'c_high_priestess' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_high_priestess']
+  elseif _c.key == 'c_empress' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_empress']
+  elseif _c.key == 'c_emperor' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_emperor']
+  elseif _c.key == 'c_heirophant' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_hierophant']
+  elseif _c.key == 'c_lovers' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_lovers']
+  elseif _c.key == 'c_chariot' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_chariot']
+  elseif _c.key == 'c_justice' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_justice']
+  elseif _c.key == 'c_hermit' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_hermit']
+  elseif _c.key == 'c_wheel_of_fortune' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_wheel_of_fortune']
+  elseif _c.key == 'c_strength' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_strength']
+  elseif _c.key == 'c_hanged_man' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_hanged_man']
+  elseif _c.key == 'c_death' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_death']
+  elseif _c.key == 'c_temperance' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_temperance']
+  elseif _c.key == 'c_devil' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_devil']
+  elseif _c.key == 'c_tower' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_tower']
+  elseif _c.key == 'c_star' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_stars']
+  elseif _c.key == 'c_moon' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_moon']
+  elseif _c.key == 'c_sun' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_sun']
+  elseif _c.key == 'c_judgement' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_judgement']
+  elseif _c.key == 'c_world' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_world']
+  elseif _c.key == 'c_who_witch' then
+    info_queue[#info_queue + 1] = G.P_CENTERS['c_who_info_witch']
+  end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if self.ability.set == 'Booster' then'''
+position = "after"
+payload = '''
+if G.GAME.used_vouchers["v_who_tarot_reading"] and self.ability.name:find('Arcana') then
+  self.ability.extra  = self.ability.extra  + Wholesome.get_consumable_count('c_emperor')
+end
+if G.GAME.used_vouchers["v_who_tarot_reading"] and self.ability.name:find('Celestial') then
+  self.ability.extra  = self.ability.extra  + Wholesome.get_consumable_count('c_high_priestess')
+end
+'''
+match_indent = true
