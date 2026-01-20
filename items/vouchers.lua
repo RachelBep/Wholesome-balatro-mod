@@ -560,41 +560,62 @@ SMODS.Voucher:take_ownership('v_omen_globe',
 }, true)
 
 SMODS.Voucher {
-  key = 'master',
+  key = 'premium_stock',
   atlas = 'vouchers',
-  pos = { x=4, y = 1},
+  pos = { x=0, y = 1},
   unlocked = true,
   discovered = true,
   	in_pool = function(self,args)
-      return not G.GAME.used_vouchers["v_glow_up"]
+      return G.GAME.round_resets.ante < G.GAME.win_ante and not G.GAME.used_vouchers["v_overstock_plus"]
     end,
-  requires = {'v_hone'},
-config = { extra = { foil = 1, holo = 2, poly = .5 } },
+    redeem = function(self,card)
+      card.ability.extra.ante= pseudorandom('ante', G.GAME.round_resets.ante, G.GAME.win_ante)
+        if not card.ability.extra.ante == G.GAME.round_resets.ante then
+          card.ability.extra.shop = pseudorandom_element({'Boss', 'Small', 'Big'}, 'blind')
+        elseif Wholesome.get_current_shop() == 'Boss' then --if we're in the boss shop it can be in the small or big shop, if we're in the small shop it has to be big and if we're in the big shop it has to be next ante
+          card.ability.extra.shop = pseudorandom_element({'Small', 'Big'}, 'blind')
+        elseif Wholesome.get_current_shop() == 'Small' then
+          card.ability.extra.shop = 'Big'
+        else
+          card.ability.extra.shop = pseudorandom_element({'Boss', 'Small', 'Big'}, 'blind')
+          card.ability.extra.ante= card.ability.extra.ante + 1
+        end
+    end,
+  requires = {'v_overstock'},
+config = { extra = { ante = -99, shop = 'Small' } },
   loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.bonus } }
 	end,
-  redeem = function(self,card)
-    G.E_MANAGER:add_event(Event({
-            func = function()
-                G.P_CENTERS['e_polychrome'].config.x_mult = G.P_CENTERS['e_polychrome'].config.x_mult + card.ability.extra.poly
-                for i, cardarea in pairs({G.jokers.cards, G.deck.cards, G.discard.cards, G.hand.cards}) do
-                  for ii, card in pairs(cardarea) do
-                    if card.edition then
-                      if card.edition.polychrome then
-                        card:set_edition("e_polychrome", true, true)
-                      end
-                    end
-                  end
-                end
-                return true
-            end,
-        }))
+  calculate = function(self, card, context)
+    if context.starting_shop then
+       if Wholesome.get_current_shop() == card.ability.extra.shop and G.GAME.round_resets.ante == card.ability.extra.ante then
+          local legendary = SMODS.add_card({ set = 'Joker', legendary = true, area = G.shop_jokers })
+          create_shop_card_ui(legendary, 'Joker', G.shop_jokers)
+          uno = G.shop_jokers.cards[1]
+          G.shop_jokers:remove_card(uno)
+          SMODS.destroy_cards(uno, true, true, true)
+       end
+   end
   end,
+
 }
 
-SMODS.Voucher:take_ownership('v_glow_up',
+
+function Wholesome.get_current_shop() --no promises this will be correct while not in the shop
+  local bod = G.GAME.blind_on_deck
+  if bod == 'Big' then
+    return bod -- when its big it works just fine
+  elseif G.GAME.round_resets.blind_states[bod] == 'Defeated' then
+    return bod
+  else -- if you are on small blind and you havnt defeated it then you are on the boss blind shop
+    return 'Boss'
+  end
+
+end
+
+SMODS.Voucher:take_ownership('v_overstock_plus',
 {
   in_pool = function(self,args)
-    return not G.GAME.used_vouchers["v_who_master"]
+    return not G.GAME.used_vouchers["v_who_premium_stock"]
   end,
 }, true)

@@ -57,7 +57,7 @@ return {
       v_who_apophnia = { name = 'Apophnia', text = { '{C:dark_edition}+#1#{} Joker Slots,', '{C:red}your curse cannot be lower{}', '{C:red}than your ante{}'} },
       v_who_overstock_minus = { name = 'Overstock Minus', text = { '{C:attention}+#1#{} card slots available in initial shop', "{C:inactive}(Before rerolls)"} },
       v_who_tarot_reading = { name = 'Tarot Reading', text = { 'Tarot cards give passive abilities',' while in your consumable area'} },
-
+      v_who_premium_stock = { name = 'Premium Stock', text = { 'A future shop will contain','a {C:legendary,E:1}Legendary{} Joker','{C:inactive}(Dont miss it)'} },
     },
     Bane = {
       bane_who_radio = { name = 'Raidō', text = { '{X:mult,C:white}X#1#{} {C:mult}Mult{}'} },
