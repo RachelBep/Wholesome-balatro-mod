@@ -4,6 +4,7 @@
 This is a mod for me to add whatever the hell i think is fun and unique, currently it adds
 ## **Alt Vouchers**
 most (soon to be each) of the vanilla vouchers now has an alternate tier 2 voucher you may find instead of the regular one
+
 <img width="607" height="449" alt="image" src="https://github.com/user-attachments/assets/ed7cc07a-da88-4941-a39e-0d132a6bc545" />
 ## **Curse and Banes**
 Some abilities may give curse in exchange for strong effects, your curse is a number between 0-9, the more you have the more banes will be added to blinds you face, making them extra difficult with punishing effects<br>
