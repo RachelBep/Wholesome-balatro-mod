@@ -11,7 +11,6 @@ SMODS.Enhancement {
   unlocked = true,
   discovered = true,
   config = {x_chips = 1.5, x_mult = 1.5},
-  always_scores = true,
   loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.x_chips, card.ability.x_mult} }
 	end,
