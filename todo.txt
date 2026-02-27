@@ -1,0 +1,4 @@
+gebo doesn't flip back when played
+death with tarot reading keeps its upgrade across multiple unrelated deaths
+ethereal cards shouldn't trigger in booster packs
+

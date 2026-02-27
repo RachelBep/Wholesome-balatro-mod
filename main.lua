@@ -205,33 +205,7 @@ G.GAME.who.max_curse = math.min(math.max(val, G.GAME.who.min_curse), 9)
 G.FUNCS.who_add_curse(0)
 end
 
-SMODS.Atlas {
-  key = 'enhance',
-  px = 71,
-  py = 95,
-  path = 'Enhancers.png'
-}
-SMODS.Enhancement {
-  key = 'ethereal',
-  atlas = 'enhance',
-  pos = {x=1, y=1},
-  unlocked = true,
-  discovered = true,
-  config = {x_chips = 1.5, x_mult = 1.5},
-  always_scores = true,
-  loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.x_chips, card.ability.x_mult} }
-	end,
-  weight = 1,
-  calculate = function(self, card, context)
-	   if context.hand_drawn and context.cardarea == G.hand then
-       card.ability.forced_selection = true
-       if G.GAME.starting_params.play_limit > #G.hand.highlighted then
-          G.hand:add_to_highlighted(card)
-        end
-     end
-  end,
-}
+assert(SMODS.load_file("items/card_addons.lua"))()
 assert(SMODS.load_file("items/spectral.lua"))()
 assert(SMODS.load_file("items/bane.lua"))()
 assert(SMODS.load_file("items/vouchers.lua"))()
@@ -314,7 +288,7 @@ function Wholesome.get_enhancement_count(enh)
   local count = 0
   if G.hand then
     for i, card in pairs(G.hand.cards) do
-      if card.config.center_key == enh then
+      if SMODS.get_enhancements(card)[enh] then
         count = count + 1
       end
     end

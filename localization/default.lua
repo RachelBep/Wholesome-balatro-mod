@@ -68,7 +68,7 @@ return {
       bane_who_gebo = { name = 'Gebō', text = { 'each {C:attention}#1#{} is drawn face down'} },
     },
     Enhanced={
-      m_who_ethereal = { name = 'Ethereal Card', text = {'{X:chips,C:white}X#1#{} Chips {X:mult,C:white}X#2#{} Mult', '{C:red}must be selected{}, always scores'} },
+      m_who_ethereal = { name = 'Ethereal Card', text = {'{X:chips,C:white}X#1#{} Chips {X:mult,C:white}X#2#{} Mult', '{C:red}Cannot be discarded{}#'} },
     }
   },
   misc = {

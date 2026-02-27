@@ -14,7 +14,7 @@ SMODS.Consumable {
   discovered = true,
   cost = 3,
   in_pool = function(self,args)
-    return (G.GAME.who_curse or 0) > 0
+    return (G.GAME.who.curse or 0) > 0
   end,
   loc_vars = function(self, info_queue, card)
         return { vars = { G.GAME.who.witch_rarity or 1, Wholesome.get_rarity_name(G.GAME.who.witch_rarity or 1) } } -- this would go sick with a colour changing depending on the rearity but i can figure out how to have vars edit the text styling

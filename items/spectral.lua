@@ -17,7 +17,6 @@ SMODS.Consumable {
   config = {mod_conv = 'm_who_ethereal'},
   loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.mod_conv]
-        return { vars = {  } }
     end,
   can_use = function(self, card)
         return G.hand and #G.hand.cards > 0
@@ -58,11 +57,6 @@ SMODS.Consumable {
                 delay = 0.1,
                 func = function()
                     to_enhance[i]:set_ability(G.P_CENTERS[card.ability.mod_conv])
-                    to_enhance[i].ability.forced_selection = true
-                    if G.GAME.starting_params.play_limit > #G.hand.highlighted then
-                       G.hand:add_to_highlighted(to_enhance[i])
-                     end
-
                     return true
                 end
             }))
